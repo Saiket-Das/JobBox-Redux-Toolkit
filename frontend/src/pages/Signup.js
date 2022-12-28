@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import loginImage from "../assets/login.svg";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import loginImage from "../assets/login.svg";
+import { createUser } from "../redux/features/auth/authSlice";
+
 const Signup = () => {
   const { handleSubmit, register, reset, control } = useForm();
   const password = useWatch({ control, name: "password" });
   const confirmPassword = useWatch({ control, name: "confirmPassword" });
   const navigate = useNavigate();
   const [disabled, setDisabled] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (
@@ -23,8 +29,9 @@ const Signup = () => {
     }
   }, [password, confirmPassword]);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = ({ email, password }) => {
+    console.log(email, password);
+    dispatch(createUser({ email: email, password: password }));
   };
 
   return (
