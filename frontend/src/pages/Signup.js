@@ -31,7 +31,7 @@ const Signup = () => {
 
   const onSubmit = ({ email, password }) => {
     console.log(email, password);
-    dispatch(createUser({ email: email, password: password }));
+    dispatch(createUser({ email, password }));
   };
 
   return (
