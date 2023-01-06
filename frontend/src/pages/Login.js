@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
@@ -9,12 +10,15 @@ import { googleLogin, loginUser } from "../redux/features/auth/authSlice";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, email } = useSelector((state) => state.auth);
+  const { isLoading, email, isError, error } = useSelector(
+    (state) => state.auth
+  );
 
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = ({ email, password }) => {
     dispatch(loginUser({ email, password }));
+    reset();
   };
 
   const handleGoogleLogin = () => {
@@ -25,7 +29,17 @@ const Login = () => {
     if (!isLoading && email) {
       navigate("/");
     }
-  }, [isLoading, email]);
+
+    if (isError && error) {
+      toast.error(error);
+    }
+  }, [isLoading, email, isError, error]);
+
+  // useEffect(() => {
+  //   if (isError && error) {
+  //     toast({ error });
+  //   }
+  // }, [isError, error]);
 
   return (
     <div className="flex h-screen items-center">
@@ -77,7 +91,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={handleGoogleLogin}
-                  className="font-bold text-white py-3 rounded-full bg-primary w-full"
+                  className="font-bold text-white py-3 rounded-full w-full bg-green-500"
                 >
                   Login with Google
                 </button>

@@ -37,6 +37,7 @@ export const loginUser = createAsyncThunk(
 export const googleLogin = createAsyncThunk("auth/googleLogin", async () => {
   const googleProvider = new GoogleAuthProvider();
   const data = await signInWithPopup(auth, googleProvider);
+  console.log(data);
 
   return data.user.email;
 });

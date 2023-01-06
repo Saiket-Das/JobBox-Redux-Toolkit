@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { RouterProvider } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import auth from "./firebase/firebase.config";
 import routes from "./routes/routes";
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <>
+      <Toaster />
       <RouterProvider router={routes} />
     </>
   );
