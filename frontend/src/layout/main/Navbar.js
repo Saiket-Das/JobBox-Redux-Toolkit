@@ -8,7 +8,7 @@ import { logOut } from "../../redux/features/auth/authSlice";
 const Navbar = () => {
   const { pathname } = useLocation();
 
-  const { email } = useSelector((state) => state.auth);
+  const { email, role } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -35,6 +35,28 @@ const Navbar = () => {
             Jobs
           </Link>
         </li>
+
+        {email && role && (
+          <li>
+            <Link
+              className=" hover:text-primary  transition-all "
+              to="/dashboard"
+            >
+              Dashboard
+            </Link>
+          </li>
+        )}
+
+        {email && !role && (
+          <li>
+            <Link
+              className=" hover:text-primary  transition-all "
+              to="/register"
+            >
+              Get start
+            </Link>
+          </li>
+        )}
 
         {email ? (
           <button
